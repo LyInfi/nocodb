@@ -105,4 +105,5 @@ result
 # Temp
 migrate-colors.js
 antd.variable.css
-CLAUDE.md.beads/
+CLAUDE.md
+.beads/
