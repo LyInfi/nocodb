@@ -115,6 +115,8 @@ import { McpController } from '~/mcp/mcp.controller';
 import { InternalController } from '~/controllers/internal.controller';
 import { ViewRowColorV3Service } from '~/services/v3/view-row-color-v3.service';
 import { DependencyService } from '~/services/dependency.service';
+import { ApprovalWorkflowService } from '~/services/approval-workflow.service';
+import { ProjectApprovalHookService } from '~/services/project-approval-hook.service';
 
 /* Datas */
 import { BulkDataAliasController } from '~/controllers/bulk-data-alias.controller';
@@ -151,6 +153,7 @@ import { FiltersV3Service } from '~/services/v3/filters-v3.service';
 import { SortsV3Service } from '~/services/v3/sorts-v3.service';
 import { TablesV3Service } from '~/services/v3/tables-v3.service';
 import { ViewRowColorController } from '~/controllers/view-row-color.controller';
+import { ApprovalWorkflowController } from '~/controllers/approval-workflow.controller';
 import { AttachmentUrlUploadHandler } from '~/services/emit-handler/attachment-url-upload.handler';
 
 /* ACL */
@@ -236,6 +239,7 @@ export const nocoModuleMetadata = {
           // MCP
           McpController,
           ViewRowColorController,
+          ApprovalWorkflowController,
 
           /* V3 APIs */
           BasesV3Controller,
@@ -331,6 +335,10 @@ export const nocoModuleMetadata = {
     ViewsV3Service,
     DependencyService,
 
+    /* Approval Workflow */
+    ApprovalWorkflowService,
+    ProjectApprovalHookService,
+
     /* Datas */
     DataTableService,
     DatasService,
@@ -408,6 +416,9 @@ export const nocoModuleMetadata = {
     ViewRowColorV3Service,
     DependencyService,
     MailService,
+
+    /* Approval Workflow */
+    ApprovalWorkflowService,
 
     /* Datas */
     DatasService,

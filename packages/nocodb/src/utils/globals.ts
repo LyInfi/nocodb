@@ -110,7 +110,8 @@ export enum MetaTable {
   MANAGED_APP_DEPLOYMENT_LOGS = 'nc_managed_app_deployment_logs',
   AUTOMATION_SUBSCRIBERS = 'nc_automation_subscribers',
 
-  // Approval Flow Tables
+  // Approval Workflow Tables
+  APPROVAL_WORKFLOWS = 'nc_approval_workflows',
   APPROVAL_FLOWS = 'nc_approval_flows',
   APPROVAL_NODES = 'nc_approval_nodes',
   APPROVAL_INSTANCES = 'nc_approval_instances',
@@ -118,6 +119,7 @@ export enum MetaTable {
   APPROVAL_CONDITIONS = 'nc_approval_conditions',
   APPROVAL_GROUPS = 'nc_approval_groups',
   APPROVAL_GROUP_MEMBERS = 'nc_approval_group_members',
+  APPROVAL_HISTORY = 'nc_approval_history',
   DEPT_LEADERS = 'nc_dept_leaders',
 }
 
