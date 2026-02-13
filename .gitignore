@@ -106,3 +106,9 @@ result
 migrate-colors.js
 antd.variable.css
 CLAUDE.md
+
+# Gas Town (added by gt)
+.runtime/
+.claude/
+.beads/
+.logs/
