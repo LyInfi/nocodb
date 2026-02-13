@@ -255,6 +255,16 @@ export enum AppEvents {
   WORKFLOW_DELETE = 'workflow.delete',
   WORKFLOW_DUPLICATE = 'workflow.duplicate',
   WORKFLOW_EXECUTE = 'workflow.execute',
+
+  // Approval workflow events
+  APPROVAL_REQUESTED = 'approval.requested',
+  APPROVAL_APPROVED = 'approval.approved',
+  APPROVAL_REJECTED = 'approval.rejected',
+  APPROVAL_CANCELLED = 'approval.cancelled',
+  APPROVAL_REMINDER = 'approval.reminder',
+  APPROVAL_ESCALATED = 'approval.escalated',
+  APPROVAL_STEP_COMPLETED = 'approval.step.completed',
+  APPROVAL_STEP_PENDING = 'approval.step.pending',
 }
 
 export enum ClickhouseTables {

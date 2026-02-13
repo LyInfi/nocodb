@@ -304,6 +304,123 @@ export class MailService {
 
           break;
         }
+        case MailEvent.APPROVAL_REQUESTED: {
+          const { user, requester, base, table, title, description, dueAt, rowId, req } = payload;
+
+          await mailerAdapter.mailSend({
+            to: user.email,
+            subject: `Approval Request: ${title}`,
+            html: await this.renderMail('ApprovalRequested', {
+              approverName: extractDisplayNameFromEmail(user.email, user.display_name),
+              requesterName: extractDisplayNameFromEmail(requester.email, requester.displayName),
+              requesterEmail: requester.email,
+              title,
+              description,
+              baseTitle: base.title,
+              tableTitle: table.title,
+              dueDate: dueAt ? new Date(dueAt).toLocaleDateString() : undefined,
+              link: this.buildUrl(req, {
+                workspaceId: base.fk_workspace_id,
+                baseId: base.id,
+                tableId: table.id,
+                rowId,
+              }),
+            }),
+          });
+          break;
+        }
+        case MailEvent.APPROVAL_REMINDER: {
+          const { user, step, instance, reminderCount, req } = payload;
+
+          await mailerAdapter.mailSend({
+            to: user.email,
+            subject: `Reminder: Approval request pending - ${instance.title}`,
+            html: await this.renderMail('ApprovalReminder', {
+              approverName: extractDisplayNameFromEmail(user.email, user.display_name),
+              title: instance.title,
+              description: instance.description,
+              baseTitle: instance.base?.title,
+              tableTitle: instance.table?.title,
+              dueDate: step.due_at ? new Date(step.due_at).toLocaleDateString() : undefined,
+              reminderCount,
+              link: this.buildUrl(req, {
+                baseId: instance.base?.id,
+                tableId: instance.table?.id,
+                rowId: instance.row_id,
+              }),
+            }),
+          });
+          break;
+        }
+        case MailEvent.APPROVAL_DECISION: {
+          const { user, approver, base, table, title, decision, comment, rowId, req } = payload;
+
+          await mailerAdapter.mailSend({
+            to: user.email,
+            subject: `Your approval request was ${decision}: ${title}`,
+            html: await this.renderMail('ApprovalDecision', {
+              requesterName: extractDisplayNameFromEmail(user.email, user.display_name),
+              approverName: extractDisplayNameFromEmail(approver.email, approver.displayName),
+              approverEmail: approver.email,
+              title,
+              decision,
+              comment,
+              baseTitle: base.title,
+              tableTitle: table.title,
+              link: this.buildUrl(req, {
+                workspaceId: base.fk_workspace_id,
+                baseId: base.id,
+                tableId: table.id,
+                rowId,
+              }),
+            }),
+          });
+          break;
+        }
+        case MailEvent.APPROVAL_ESCALATED: {
+          const { user, step, instance, escalationLevel, previousApprover, req } = payload;
+
+          await mailerAdapter.mailSend({
+            to: user.email,
+            subject: `Approval escalated to you: ${instance.title}`,
+            html: await this.renderMail('ApprovalEscalated', {
+              newApproverName: extractDisplayNameFromEmail(user.email, user.display_name),
+              title: instance.title,
+              description: instance.description,
+              baseTitle: instance.base?.title,
+              tableTitle: instance.table?.title,
+              escalationLevel,
+              previousApproverName: previousApprover
+                ? extractDisplayNameFromEmail(previousApprover.email, previousApprover.displayName)
+                : undefined,
+              reason: `No response within timeout period (Level ${escalationLevel})`,
+              link: this.buildUrl(req, {
+                baseId: instance.base?.id,
+                tableId: instance.table?.id,
+                rowId: instance.row_id,
+              }),
+            }),
+          });
+          break;
+        }
+        case MailEvent.APPROVAL_CANCELLED: {
+          const { user, cancelledBy, base, title, reason, req } = payload;
+
+          await mailerAdapter.mailSend({
+            to: user.email,
+            subject: `Approval request cancelled: ${title}`,
+            html: await this.renderMail('ApprovalCancelled', {
+              approverName: extractDisplayNameFromEmail(user.email, user.display_name),
+              title,
+              baseTitle: base.title,
+              cancelledByName: extractDisplayNameFromEmail(cancelledBy.email, cancelledBy.displayName),
+              cancelledByEmail: cancelledBy.email,
+              reason,
+              cancelledAt: new Date().toLocaleString(),
+            }),
+          });
+          break;
+        }
       }
       return true;
     } catch (e) {
