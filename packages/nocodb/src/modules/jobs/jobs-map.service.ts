@@ -12,6 +12,10 @@ import { InitMigrationJobs } from '~/modules/jobs/migration-jobs/init-migration-
 import { UseWorkerProcessor } from '~/modules/jobs/jobs/use-worker/use-worker.processor';
 import { DataExportCleanUpProcessor } from '~/modules/jobs/jobs/data-export-clean-up/data-export-clean-up.processor';
 import { AttachmentUrlUploadProcessor } from '~/modules/jobs/jobs/attachment-url-upload/attachment-url-upload.processor';
+import {
+  ApprovalReminderProcessor,
+  ApprovalEscalationProcessor,
+} from '~/modules/jobs/jobs/approval';
 import { JobTypes } from '~/interface/Jobs';
 
 @Injectable()
@@ -30,6 +34,8 @@ export class JobsMap {
     protected readonly useWorkerProcessor: UseWorkerProcessor,
     protected readonly dataExportCleanUpProcessor: DataExportCleanUpProcessor,
     protected readonly attachmentUrlUploadProcessor: AttachmentUrlUploadProcessor,
+    protected readonly approvalReminderProcessor: ApprovalReminderProcessor,
+    protected readonly approvalEscalationProcessor: ApprovalEscalationProcessor,
   ) {}
 
   protected get _jobMap(): {
@@ -90,6 +96,12 @@ export class JobsMap {
       },
       [JobTypes.AttachmentUrlUpload]: {
         this: this.attachmentUrlUploadProcessor,
+      },
+      [JobTypes.ApprovalReminder]: {
+        this: this.approvalReminderProcessor,
+      },
+      [JobTypes.ApprovalEscalation]: {
+        this: this.approvalEscalationProcessor,
       },
     };
   }

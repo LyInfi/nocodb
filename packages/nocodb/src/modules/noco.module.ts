@@ -19,6 +19,7 @@ import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { HookHandlerService } from '~/services/hook-handler.service';
 import { MailService } from '~/services/mail/mail.service';
 import { TelemetryService } from '~/services/telemetry.service';
+import { ApprovalNotificationsService } from '~/services/approvals/approval-notifications.service';
 import { JwtStrategy } from '~/strategies/jwt.strategy';
 /* User */
 import { UsersController } from '~/controllers/users/users.controller';
@@ -269,6 +270,7 @@ export const nocoModuleMetadata = {
     TelemetryHandlerService,
     HookHandlerService,
     MailService,
+    ApprovalNotificationsService,
 
     AclMiddleware,
 

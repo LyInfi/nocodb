@@ -24,6 +24,11 @@ const { toggleRead } = notificationStore
     <NotificationItemWorkspaceTeamInvite v-else-if="item.type === AppEvents.WORKSPACE_TEAM_INVITE" :item="item" />
     <NotificationItemProjectTeamInvite v-else-if="item.type === AppEvents.PROJECT_TEAM_INVITE" :item="item" />
     <NotificationItemTeamMemberInvite v-else-if="item.type === AppEvents.TEAM_MEMBER_ADD" :item="item" />
+    <!-- Approval workflow notifications -->
+    <NotificationItemApprovalRequested v-else-if="item.type === AppEvents.APPROVAL_REQUESTED" :item="item" />
+    <NotificationItemApprovalDecision v-else-if="[AppEvents.APPROVAL_APPROVED, AppEvents.APPROVAL_REJECTED].includes(item.type)" :item="item" />
+    <NotificationItemApprovalReminder v-else-if="item.type === AppEvents.APPROVAL_REMINDER" :item="item" />
+    <NotificationItemApprovalEscalated v-else-if="item.type === AppEvents.APPROVAL_ESCALATED" :item="item" />
     <span v-else />
   </div>
 </template>

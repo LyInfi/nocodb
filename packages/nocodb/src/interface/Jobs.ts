@@ -64,6 +64,11 @@ export enum JobTypes {
   HeartbeatWorkflow = 'heartbeat-workflow',
   PollWorkflow = 'poll-workflow',
   WorkflowErrorNotification = 'workflow-error-notification',
+
+  // Approval workflow jobs
+  ApprovalReminder = 'approval-reminder',
+  ApprovalEscalation = 'approval-escalation',
+  ApprovalTimeout = 'approval-timeout',
 }
 
 export const SKIP_STORING_JOB_META = [
@@ -85,6 +90,9 @@ export const SKIP_STORING_JOB_META = [
   JobTypes.HeartbeatWorkflow,
   JobTypes.PollWorkflow,
   JobTypes.WorkflowErrorNotification,
+  JobTypes.ApprovalReminder,
+  JobTypes.ApprovalEscalation,
+  JobTypes.ApprovalTimeout,
 ];
 
 export enum JobStatus {
@@ -309,4 +317,28 @@ export interface PollWorkflowJobData extends JobData {
   workflowId: string;
   triggerNodeId: string;
   activationState: Record<string, any>;
+}
+
+// Approval workflow job data interfaces
+export interface ApprovalReminderJobData extends JobData {
+  stepId: string;
+  instanceId: string;
+  approverId: string;
+  reminderCount: number;
+  req?: NcRequest;
+}
+
+export interface ApprovalEscalationJobData extends JobData {
+  stepId: string;
+  instanceId: string;
+  escalatedToId: string;
+  escalationLevel: number;
+  req?: NcRequest;
+}
+
+export interface ApprovalTimeoutJobData extends JobData {
+  stepId: string;
+  instanceId: string;
+  timeoutAction: 'remind' | 'escalate' | 'auto_approve' | 'auto_reject';
+  req?: NcRequest;
 }

@@ -37,6 +37,13 @@ enum MailEvent {
   BASE_TEAM_ROLE_UPDATE = 'BASE_TEAM_ROLE_UPDATE',
   WORKFLOW_ERROR_DIGEST = 'WORKFLOW_ERROR_DIGEST',
   SEND_RECORD = 'SEND_RECORD',
+
+  // Approval workflow email events
+  APPROVAL_REQUESTED = 'APPROVAL_REQUESTED',
+  APPROVAL_REMINDER = 'APPROVAL_REMINDER',
+  APPROVAL_DECISION = 'APPROVAL_DECISION',
+  APPROVAL_ESCALATED = 'APPROVAL_ESCALATED',
+  APPROVAL_CANCELLED = 'APPROVAL_CANCELLED',
 }
 
 interface CommentPayload {
@@ -121,6 +128,88 @@ interface SendRecordPayload {
   req: NcRequest;
 }
 
+// Approval workflow email payloads
+interface ApprovalRequestedPayload {
+  user: UserType;
+  requester: {
+    id: string;
+    email: string;
+    displayName?: string;
+  };
+  base: {
+    id: string;
+    title: string;
+  };
+  table: {
+    id: string;
+    title: string;
+  };
+  title: string;
+  description?: string;
+  dueAt?: Date;
+  rowId: string;
+  req: NcRequest;
+}
+
+interface ApprovalReminderPayload {
+  user: UserType;
+  step: any;
+  instance: any;
+  reminderCount: number;
+  req?: NcRequest;
+}
+
+interface ApprovalDecisionPayload {
+  user: UserType;
+  approver: {
+    id: string;
+    email: string;
+    displayName?: string;
+  };
+  base: {
+    id: string;
+    title: string;
+  };
+  table: {
+    id: string;
+    title: string;
+  };
+  title: string;
+  decision: 'approved' | 'rejected';
+  comment?: string;
+  rowId: string;
+  req: NcRequest;
+}
+
+interface ApprovalEscalatedPayload {
+  user: UserType;
+  step: any;
+  instance: any;
+  escalationLevel: number;
+  previousApprover?: {
+    id: string;
+    email: string;
+    displayName?: string;
+  } | null;
+  req?: NcRequest;
+}
+
+interface ApprovalCancelledPayload {
+  user: UserType;
+  cancelledBy: {
+    id: string;
+    email: string;
+    displayName?: string;
+  };
+  base: {
+    id: string;
+    title: string;
+  };
+  title: string;
+  reason?: string;
+  req: NcRequest;
+}
+
 type MailParams =
   | {
       mailEvent: MailEvent.COMMENT_CREATE | MailEvent.COMMENT_UPDATE;
@@ -161,6 +250,26 @@ type MailParams =
   | {
       mailEvent: MailEvent.SEND_RECORD;
       payload: SendRecordPayload;
+    }
+  | {
+      mailEvent: MailEvent.APPROVAL_REQUESTED;
+      payload: ApprovalRequestedPayload;
+    }
+  | {
+      mailEvent: MailEvent.APPROVAL_REMINDER;
+      payload: ApprovalReminderPayload;
+    }
+  | {
+      mailEvent: MailEvent.APPROVAL_DECISION;
+      payload: ApprovalDecisionPayload;
+    }
+  | {
+      mailEvent: MailEvent.APPROVAL_ESCALATED;
+      payload: ApprovalEscalatedPayload;
+    }
+  | {
+      mailEvent: MailEvent.APPROVAL_CANCELLED;
+      payload: ApprovalCancelledPayload;
     };
 
 interface RawMailParams {
@@ -179,4 +288,9 @@ export {
   FormSubmissionPayload,
   SendRecordPayload,
   RawMailParams,
+  ApprovalRequestedPayload,
+  ApprovalReminderPayload,
+  ApprovalDecisionPayload,
+  ApprovalEscalatedPayload,
+  ApprovalCancelledPayload,
 };
