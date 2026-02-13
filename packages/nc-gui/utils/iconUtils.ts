@@ -1260,6 +1260,7 @@ export const iconMap = {
   'arrowDropDown': MaterialSymbolsArrowDropDown,
   'alertTriangle': NcAlertTriangle,
   'audit': NcAudit,
+  'approval': NcThumbsUpOutline,
   'messageCircle': NcMessageCircle,
   'ncKey': NcKey,
   'minimize': NcMinimize,
