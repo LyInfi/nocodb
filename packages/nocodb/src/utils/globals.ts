@@ -112,8 +112,10 @@ export enum MetaTable {
 
   // Approval Flow Tables
   APPROVAL_FLOWS = 'nc_approval_flows',
+  APPROVAL_NODES = 'nc_approval_nodes',
   APPROVAL_INSTANCES = 'nc_approval_instances',
   APPROVAL_TASKS = 'nc_approval_tasks',
+  APPROVAL_CONDITIONS = 'nc_approval_conditions',
   APPROVAL_GROUPS = 'nc_approval_groups',
   APPROVAL_GROUP_MEMBERS = 'nc_approval_group_members',
   DEPT_LEADERS = 'nc_dept_leaders',
