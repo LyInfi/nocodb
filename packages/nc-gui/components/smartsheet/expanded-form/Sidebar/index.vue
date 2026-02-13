@@ -3,20 +3,29 @@ const props = defineProps<{
   showFieldsTab?: boolean
 }>()
 
-const { isSqlView } = useSmartsheetStoreOrThrow()
+const { isSqlView, meta } = useSmartsheetStoreOrThrow()
 
 const expandedFormStore = useExpandedFormStoreOrThrow()
 
 const { isExpandedFormCommentMode } = storeToRefs(useConfigStore())
 
-const tab = ref<'fields' | 'comments' | 'audits'>(
+const tab = ref<'fields' | 'comments' | 'audits' | 'approval'>(
   props.showFieldsTab && (!isExpandedFormCommentMode.value || isSqlView.value) ? 'fields' : 'comments',
 )
 
 watch(tab, (newValue) => {
   if (newValue === 'audits') {
     expandedFormStore.loadAudits()
+  } else if (newValue === 'approval') {
+    expandedFormStore.loadApprovalRecord()
   }
+})
+
+// Check if approval feature is enabled for the current view
+const isApprovalEnabled = computed(() => {
+  // TODO: Check if approval workflow is enabled for this table/view
+  // This can be extended based on backend configuration
+  return !!meta.value?.enable_approvals
 })
 </script>
 
@@ -51,6 +60,28 @@ watch(tab, (newValue) => {
           </div>
         </template>
         <SmartsheetExpandedFormSidebarAudits />
+      </a-tab-pane>
+
+      <a-tab-pane v-if="!isSqlView && isApprovalEnabled" key="approval" class="w-full h-full">
+        <template #tab>
+          <div v-e="['c:row-expand:approval']" class="flex items-center gap-2">
+            <GeneralIcon icon="approval" class="w-4 h-4" />
+            <span class="<lg:hidden"> {{ $t('labels.approval') }} </span>
+          </div>
+        </template>
+        <div class="p-3 h-full overflow-y-auto">
+          <ApprovalPanel
+            :record-id="expandedFormStore.row?.id || ''"
+            :table-id="meta?.id || ''"
+            :approval-record="expandedFormStore.approvalRecord || null"
+            @refresh="expandedFormStore.loadApprovalRecord?.()"
+          />
+          <ApprovalTimeline
+            v-if="expandedFormStore.approvalHistory?.length"
+            :history="expandedFormStore.approvalHistory"
+            class="mt-3"
+          />
+        </div>
       </a-tab-pane>
     </NcTabs>
   </div>

@@ -7,6 +7,7 @@ import type {
   PlanLimitExceededDetailsType,
   TableType,
 } from 'nocodb-sdk'
+import type { ApprovalRecord, ApprovalHistoryItem } from '~/lib/types'
 import {
   EventType,
   PermissionEntity,
@@ -50,6 +51,12 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState(
     const commentsDrawer = ref(true)
 
     const saveRowAndStay = ref(0)
+
+    const approvalRecord = ref<ApprovalRecord | null>(null)
+
+    const approvalHistory = ref<ApprovalHistoryItem[]>([])
+
+    const isApprovalLoading = ref(false)
 
     const changedColumns = ref<Set<string>>(new Set<string>())
 
@@ -333,6 +340,23 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState(
       audits.value = []
       hasMoreAudits.value = false
       await loadAudits()
+    }
+
+    const loadApprovalRecord = async () => {
+      if (!meta.value?.id || !primaryKey.value || isPublic.value) return
+
+      isApprovalLoading.value = true
+      try {
+        const response = await $api.approval.getByRecord(meta.value.id, primaryKey.value)
+        approvalRecord.value = response?.record || null
+        approvalHistory.value = response?.history || []
+      } catch (e: any) {
+        // Approval may not exist for this record
+        approvalRecord.value = null
+        approvalHistory.value = []
+      } finally {
+        isApprovalLoading.value = false
+      }
     }
 
     const isYou = (email: string) => {
@@ -944,6 +968,10 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState(
       isAllowedAddNewRecord,
       getIsAllowedEditField,
       meta,
+      approvalRecord,
+      approvalHistory,
+      isApprovalLoading,
+      loadApprovalRecord,
     }
   },
   'expanded-form-store',

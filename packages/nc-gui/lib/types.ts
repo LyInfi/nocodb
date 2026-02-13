@@ -1092,3 +1092,73 @@ export type {
   SupportedDocsType,
   TeamType,
 }
+
+// Approval types
+enum ApprovalStatus {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+  CANCELLED = 'cancelled',
+}
+
+interface ApprovalUser {
+  id: string
+  email: string
+  display_name?: string | null
+}
+
+interface ApprovalRecord {
+  id: string
+  recordId: string
+  tableId: string
+  viewId?: string
+  status: ApprovalStatus
+  submittedBy?: ApprovalUser
+  approvedBy?: ApprovalUser
+  rejectedBy?: ApprovalUser
+  comment?: string
+  createdAt: string
+  updatedAt: string
+  recordTitle?: string
+  tableTitle?: string
+}
+
+interface ApprovalHistoryItem {
+  id: string
+  approvalId: string
+  action: 'submit' | 'approve' | 'reject' | 'cancel'
+  user?: ApprovalUser
+  comment?: string
+  createdAt: string
+}
+
+interface ApprovalActionRequest {
+  approvalId: string
+  action: 'approve' | 'reject'
+  comment?: string
+}
+
+interface ApprovalListQuery {
+  status?: ApprovalStatus
+  page?: number
+  limit?: number
+}
+
+interface ApprovalListResponse {
+  data: ApprovalRecord[]
+  meta: {
+    total: number
+    page: number
+    limit: number
+  }
+}
+
+export {
+  ApprovalStatus,
+  type ApprovalUser,
+  type ApprovalRecord,
+  type ApprovalHistoryItem,
+  type ApprovalActionRequest,
+  type ApprovalListQuery,
+  type ApprovalListResponse,
+}

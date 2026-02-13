@@ -288,6 +288,8 @@
     "duplicateEntity": "Duplicate {entity}",
     "activate": "Activate",
     "action": "Action",
+    "approve": "Approve",
+    "reject": "Reject",
     "insert": "Insert",
     "delete": "Delete",
     "deleteEntity": "Delete {entity}",
@@ -2295,7 +2297,31 @@
     "youHaveNotCreatedAnyTeamsSubtitle": "Group members into teams for easier assignments and permission configurations",
     "enterTeamName": "Enter team name",
     "enterTeamDescription": "Enter team description",
-    "searchTemplates": "Search templates"
+    "searchTemplates": "Search templates",
+    "approval": "Approval",
+    "notSubmitted": "Not Submitted",
+    "approvalPending": "Pending",
+    "approvalApproved": "Approved",
+    "approvalRejected": "Rejected",
+    "approvalCancelled": "Cancelled",
+    "approvalUnknown": "Unknown",
+    "pendingApprovals": "Pending Approvals",
+    "untitledRecord": "Untitled Record",
+    "submittedBy": "Submitted by",
+    "unknownUser": "Unknown User",
+    "approvedBy": "Approved by",
+    "rejectedBy": "Rejected by",
+    "approvalActionHint": "Please review and take action on this record",
+    "confirmApprove": "Confirm Approval",
+    "confirmReject": "Confirm Rejection",
+    "confirmApproveDescription": "Are you sure you want to approve this record?",
+    "confirmRejectDescription": "Are you sure you want to reject this record?",
+    "comment": "Comment",
+    "approvalCommentPlaceholder": "Enter your comments (optional)",
+    "approvalAction_submit": "Submitted for approval",
+    "approvalAction_approve": "Approved",
+    "approvalAction_reject": "Rejected",
+    "approvalAction_cancel": "Cancelled"
   },
   "msg": {
     "replaceVersionAndGoLive": "Replace {version} and go live",
@@ -2942,7 +2968,9 @@
       "mcpUrlCopied": "MCP URL copied to clipboard",
       "nlookupFieldsCreatedSuccessfully": "{n} Lookup field created successfully",
       "nlookupFieldsCreatedSuccessfullyPlural": "{n} Lookup fields created successfully",
-      "tableDuplicatedInOtherBase": "Table has successfully duplicated in another base. Open the specified base to see it."
+      "tableDuplicatedInOtherBase": "Table has successfully duplicated in another base. Open the specified base to see it.",
+      "approved": "Record approved successfully",
+      "rejected": "Record rejected successfully"
     },
     "subText": {
       "startFromScratch": "Start from scratch.",
@@ -2955,6 +2983,10 @@
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
     "tryAgain": "Try Again",
     "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls",
+    "noApprovalHistory": "No approval history available",
+    "noApprovalRecord": "This record has not been submitted for approval",
+    "noPendingApprovals": "No pending approvals",
+    "waitingForApproval": "This record is waiting for approval"
   }
 }
