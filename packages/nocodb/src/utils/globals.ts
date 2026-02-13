@@ -109,6 +109,12 @@ export enum MetaTable {
   MANAGED_APP_VERSIONS = 'nc_managed_app_versions',
   MANAGED_APP_DEPLOYMENT_LOGS = 'nc_managed_app_deployment_logs',
   AUTOMATION_SUBSCRIBERS = 'nc_automation_subscribers',
+
+  // Approval Workflow Tables
+  APPROVAL_WORKFLOWS = 'nc_approval_workflows',
+  APPROVAL_INSTANCES = 'nc_approval_instances',
+  DEPT_LEADERS = 'nc_dept_leaders',
+  APPROVAL_HISTORY = 'nc_approval_history',
 }
 
 export const BaseRelatedMetaTables = [

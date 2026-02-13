@@ -64,3 +64,9 @@ export { default as Workspace } from './Workspace';
 export { default as DependencyTracker } from './DependencyTracker';
 export { default as Widget } from './Widget';
 export { default as Workflow } from './Workflow';
+
+// Approval Workflow Models
+export { default as ApprovalWorkflow } from './ApprovalWorkflow';
+export { default as ApprovalInstance } from './ApprovalInstance';
+export { default as DeptLeader } from './DeptLeader';
+export { default as ApprovalHistory } from './ApprovalHistory';
